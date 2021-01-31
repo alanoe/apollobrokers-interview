@@ -2,6 +2,9 @@
 from xml.etree import ElementTree
 
 
+class XmlParseException(Exception):
+    pass
+
 def convert_xml_elem_to_dict(elem):
 
     _dict = {}
@@ -30,5 +33,8 @@ def convert_xml_to_dict(xml):
         dict: JSON equivalent representation of the XML string
     """
 
-    root = ElementTree.fromstring(xml)
+    try:
+        root = ElementTree.fromstring(xml)
+    except ElementTree.ParseError:
+        raise XmlParseException()
     return convert_xml_elem_to_dict(root)

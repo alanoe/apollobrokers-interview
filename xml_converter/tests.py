@@ -57,3 +57,11 @@ class XMLConversionTestCase(TestCase):
                     },
                 ],
             })
+
+    def test_connected_convert_invalid_xml_file(self):
+        with (TEST_DIR / Path('invalid.xml')).open() as fp:
+            response = self.client.post('/connected/', {
+                'file': fp,
+            })
+            self.assertEqual(response.status_code, 400)
+
